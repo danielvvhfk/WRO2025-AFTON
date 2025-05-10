@@ -3,8 +3,8 @@ import serial
 import time  # Import the time module for sleep functionality
 
 # Define the serial port and baud rate (typically 9600 for Maestro)
-PORT = '/dev/ttyUSB0' 
-# PORT = 'COM4'
+# PORT = '/dev/ttyUSB0' 
+PORT = 'COM4'
 BAUD_RATE = 115200
 
 START_BYTE = b'$'
@@ -88,6 +88,18 @@ def read_response(ser):
     else:
         print("Invalid response received.")
         return None
+def save_command_to_bin(filename, command, data=None):
+    """
+    Save a binary command message to a file.
+    :param filename: Output .bin file path.
+    :param command: Command ID (e.g., 0x0101).
+    :param data: Optional data as bytes.
+    """
+    message = create_message(command, data)
+    with open(filename, 'wb') as f:
+        f.write(message)
+    print(f"Binary command saved to {filename}: {message.hex()}")
+
 
 # Example Usage
 if __name__ == "__main__":
@@ -108,28 +120,39 @@ if __name__ == "__main__":
     # if response:
     #     print(f"Response: {response}")
 
-
-    # Example: Send the command to move forward (0x0101)
-    send_command(ser, 0x0101)
+    # Generate binary file for READ_DISTANCE_SENSOR (command 0x0003)
+    save_command_to_bin('read_distance.bin', 0x0003)
+    # Read VL53L7CX distance from STM32
+    send_command(ser, 0x0003)
     time.sleep(0.1)
-    # Read and process the response
+
+    response = read_response(ser)
+    if response:
+        print("Distance response:", response['data'].decode())
+    else:
+        print("No valid response received.")
+
+    #  Move forward by 360 degrees
+    # save_command_to_bin('fwd_360.bin', 0x0101, (360).to_bytes(2, 'little'))
+    send_command(ser, 0x0101, (360).to_bytes(2, 'little'))
+    time.sleep(0.1)
     response = read_response(ser)
     if response:
         print(f"Response: {response}")
 
-    # Wait for 5 seconds before sending the next command
     time.sleep(5)
 
-    # Example: Send the command to stop (0x0103)
-    send_command(ser, 0x0103)
-
-    # Read and process the response
+    # Move reverse by 360 degrees
+    # save_command_to_bin('rev_360.bin', 0x0102, (360).to_bytes(2, 'little'))
+    send_command(ser, 0x0102, (360).to_bytes(2, 'little'))
+    time.sleep(0.1)
     response = read_response(ser)
     if response:
         print(f"Response: {response}")
+
     time.sleep(5)
 
-    # # Example: Send the command to move in reverse (0x0102)
+    # # Example: Send the command to speed (0x0104)
     send_command(ser, 0x0104,(90).to_bytes(1, 'big'))
     time.sleep(0.1)
 
@@ -140,24 +163,5 @@ if __name__ == "__main__":
 
     time.sleep(5)
 
-    # # Example: Send the command to move in reverse (0x0102)
-    send_command(ser, 0x0102)
-    time.sleep(0.1)
-
-    # Read and process the response
-    response = read_response(ser)
-    if response:
-        print(f"Response: {response}")
-
-    # Wait for 5 seconds before sending the next command
-    time.sleep(5)
-
-    # Example: Send the command to stop (0x0103)
-    send_command(ser, 0x0103)
-
-    # Read and process the response
-    response = read_response(ser)
-    if response:
-        print(f"Response: {response}")
-
+   
     ser.close()

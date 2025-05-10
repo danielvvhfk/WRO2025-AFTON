@@ -8,7 +8,7 @@ BAUD_RATE = 9600
 
 # Define operational ranges for each servo channel
 SERVO_CHANNELS = {
-    0: {"name": "steering", "min": 1190, "max": 2300, "middle": 1750}
+    0: {"name": "steering", "min": 1180, "max": 1920, "middle": 1590}
 }
 
 def set_servo_position(ser, channel, pulse_width_us):
@@ -51,19 +51,14 @@ def main():
 
     # Give the connection a moment to settle
     time.sleep(2)
-    set_servo_position(ser, channel=0, pulse_width_us=2150)
+    set_servo_position(ser, channel=0, pulse_width_us=1920)
     time.sleep(2)
 
     # You can set additional channels similarly:
-    set_servo_position(ser, channel=0, pulse_width_us=1190)
+    set_servo_position(ser, channel=0, pulse_width_us=1180)
     time.sleep(2)
-    set_servo_position(ser, channel=0, pulse_width_us=1750)
+    set_servo_position(ser, channel=0, pulse_width_us=1590)
     time.sleep(2)
-    set_servo_position(ser, channel=0, pulse_width_us=2150)
-    time.sleep(2)
-    set_servo_position(ser, channel=0, pulse_width_us=1700)
-    time.sleep(2)
-    # Close the serial port when done
 
     # You can add more preset tests below
     # armPresetPosition(ser, value=1)

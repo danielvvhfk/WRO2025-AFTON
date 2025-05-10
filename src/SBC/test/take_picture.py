@@ -12,12 +12,12 @@ def gstreamer_pipeline(
     flip_method=0,
 ):
     return (
-        "nvarguscamerasrc sensor-id=%d ! "
+        "nvarguscamerasrc sensor-id=%d wbmode=0 exposuremode=1 gaincontrol=0 ! "  # White Balance, Exposure, Gain
         "video/x-raw(memory:NVMM), width=(int)%d, height=(int)%d, framerate=(fraction)%d/1 ! "
         "nvvidconv flip-method=%d ! "
-        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
+        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "  # Ensure format is BGRx
         "videoconvert ! "
-        "video/x-raw, format=(string)BGR ! appsink"
+        "video/x-raw, format=(string)BGR ! appsink"  # Convert to BGR
         % (
             sensor_id,
             capture_width,

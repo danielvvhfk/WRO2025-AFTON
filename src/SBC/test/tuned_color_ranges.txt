@@ -1,0 +1,7 @@
+Red HSV Range:
+Lower: [ 0 94 71]
+Upper: [179 225 130]
+
+Green HSV Range:
+Lower: [79 78 39]
+Upper: [ 88 232 101]

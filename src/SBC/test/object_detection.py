@@ -12,12 +12,12 @@ def gstreamer_pipeline(
     flip_method=0,
 ):
     return (
-        "nvarguscamerasrc sensor-id=%d ! "
+        "nvarguscamerasrc sensor-id=%d wbmode=4 exposuremode=1 gaincontrol=1 ! "  # White Balance, Exposure, Gain
         "video/x-raw(memory:NVMM), width=(int)%d, height=(int)%d, framerate=(fraction)%d/1 ! "
         "nvvidconv flip-method=%d ! "
-        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
+        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "  # Ensure format is BGRx
         "videoconvert ! "
-        "video/x-raw, format=(string)BGR ! appsink"
+        "video/x-raw, format=(string)BGR ! appsink"  # Convert to BGR
         % (
             sensor_id,
             capture_width,
@@ -37,12 +37,12 @@ def detect_objects(frame):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # Lower and upper bounds for detecting red pillars
-    lower_red = np.array([0, 110, 82])      # lower bound of red
-    upper_red = np.array([179, 227, 124])    # upper bound of red
+    lower_red = np.array([0, 94, 71])      # lower bound of red
+    upper_red = np.array([179, 225, 130])    # upper bound of red
 
     # Lower and upper bounds for detecting green pillars
-    lower_green = np.array([73, 152, 78])  # lower bound of green
-    upper_green = np.array([81, 255, 103])  # upper bound of green
+    lower_green = np.array([0, 94, 71])  # lower bound of green
+    upper_green = np.array([179, 225, 130])  # upper bound of green
 
     # Create masks for red and green pillars
     mask_red = cv2.inRange(hsv, lower_red, upper_red)
