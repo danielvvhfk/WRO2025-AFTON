@@ -1,14 +1,16 @@
-| Supported Targets | Rock 3A |
+| Supported Target | Jetson Orin Nano/Stm32 |
 | ----------------- | ------- |
 
 # WRO2025-AFTON
 
 ## Introduction
 
-Welcome to the WRO2025-AFTON project! This innovative project focuses on developing a self-driving car system using the Rock 3A microcontroller. The project leverages machine learning to navigate a track with randomly placed green and red traffic signs, ensuring the vehicle follows the correct lane. The primary components of the system include the AFTON API for training the model and the AFTON SmartWheels for the main microcontroller operations. Detailed information can be found in the Technical Specification Document.
+Welcome to the WRO2025-AFTON project! This innovative project focuses on developing a self-driving car system using how SBM the Stm32 microcontroller and how SBC a Jetson Orin Nano. The project leverages machine learning to navigate a track with randomly placed green and red traffic signs, ensuring the vehicle follows the correct lane. The primary components of the system include the AFTON API for training the model and the AFTON SmartWheels for the main microcontroller operations. Detailed information can be found in the Technical Specification Document.
 
 ![Team Photo](v-photos/AftonSmartWheels(Prom).png)
 
+
+![d](D:\Users\yulia\Nueva carpeta\WRO2025-AFTON\img.png)
 ## Content
 This repository contains the following main directories and files:
 
