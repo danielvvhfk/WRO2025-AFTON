@@ -10,7 +10,7 @@ Welcome to the WRO2025-AFTON project! This innovative project focuses on develop
 ![Team Photo](v-photos/AftonSmartWheels(Prom).png)
 
 
-![d](D:\Users\yulia\Nueva carpeta\WRO2025-AFTON\img.png)
+![d](/WRO2025-AFTON/img.png)
 ## Content
 This repository contains the following main directories and files:
 
